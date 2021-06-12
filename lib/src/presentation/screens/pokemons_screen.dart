@@ -14,44 +14,42 @@ class PokemonsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: DependencyInjectionWidget(
-            url: _url,
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 16,
-                horizontal: 16,
-              ),
-              child: BlocBuilder<PokemonDispatch, PokemonState>(
-                builder: (BuildContext context, state) {
-                  if (state is PokemonLoading) {
-                    return Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is PokemonFailure) {
-                    return Center(
-                      child:
-                          Text('Ops, algum erro aconteceu!\n${state.message}'),
-                    );
-                  } else if (state is PokemonSeccess) {
-                    return ListView.builder(
-                      itemCount: state.value.length,
-                      itemBuilder: (BuildContext context, int index) => Card(
-                        child: ListTile(
-                          title: Text(state.value[index].name),
-                          leading: CircleAvatar(
-                            backgroundImage:
-                                NetworkImage(state.value[index].image),
-                          ),
-                        ),
-                      ),
-                    );
-                  }
+        child: DependencyInjectionWidget(
+          url: _url,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 16,
+              horizontal: 16,
+            ),
+            child: BlocBuilder<PokemonDispatch, PokemonState>(
+              builder: (BuildContext context, state) {
+                if (state is PokemonLoading) {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                },
-              ),
+                } else if (state is PokemonFailure) {
+                  return Center(
+                    child: Text('Ops, algum erro aconteceu!\n${state.message}'),
+                  );
+                } else if (state is PokemonSeccess) {
+                  return ListView.builder(
+                    itemCount: state.value.length,
+                    itemBuilder: (BuildContext context, int index) => Card(
+                      child: ListTile(
+                        title: Text(state.value[index].name),
+                        subtitle: Text("${state.value[index].type.toString()}"),
+                        leading: CircleAvatar(
+                          backgroundImage:
+                              NetworkImage(state.value[index].image),
+                        ),
+                      ),
+                    ),
+                  );
+                }
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              },
             ),
           ),
         ),
