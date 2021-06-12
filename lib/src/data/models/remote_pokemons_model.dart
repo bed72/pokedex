@@ -10,9 +10,10 @@ class RemotePokemonsModel {
   }
 
   factory RemotePokemonsModel.fromJson(Map<String, dynamic> json) {
+    print('\n\n RemotePokemonModel: ${json.runtimeType} \n$json \n\n');
     return RemotePokemonsModel(
-      pokemons: json['pokemon'].map<Map<String, dynamic>>(
-          (pokemon) => PokemonsEntity.fromJson(json)),
+      pokemons:
+          json['pokemon'].map((pokemon) => PokemonsEntity.fromJson(pokemon)),
     );
   }
 
