@@ -17,15 +17,15 @@ class PokemonLoading extends PokemonState {
 
 @immutable
 class PokemonSeccess extends PokemonState {
-  late final List<PokemonEntity> value;
+  late final List<PokemonEntity> values;
 
   PokemonSeccess({
-    required this.value,
+    required this.values,
   });
 
   @override
   List<Object?> get props => [
-        value,
+        values,
       ];
 }
 

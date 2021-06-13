@@ -23,24 +23,21 @@ class PokemonsScreen extends StatelessWidget {
             ),
             child: BlocBuilder<PokemonDispatch, PokemonState>(
               builder: (BuildContext context, state) {
-                if (state is PokemonLoading) {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else if (state is PokemonFailure) {
+                if (state is PokemonFailure) {
                   return Center(
                     child: Text('Ops, algum erro aconteceu!\n${state.message}'),
                   );
                 } else if (state is PokemonSeccess) {
                   return ListView.builder(
-                    itemCount: state.value.length,
+                    itemCount: state.values.length,
                     itemBuilder: (BuildContext context, int index) => Card(
                       child: ListTile(
-                        title: Text(state.value[index].name),
-                        subtitle: Text("${state.value[index].type.toString()}"),
+                        title: Text(state.values[index].name),
+                        subtitle:
+                            Text('${state.values[index].type.toString()}'),
                         leading: CircleAvatar(
                           backgroundImage:
-                              NetworkImage(state.value[index].image),
+                              NetworkImage(state.values[index].image),
                         ),
                       ),
                     ),

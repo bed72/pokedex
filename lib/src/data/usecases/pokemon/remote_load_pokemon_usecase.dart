@@ -23,12 +23,6 @@ class RemoteLoadPokemon implements LoadPokemon {
     try {
       final httpResponse = await httpClient.request(url: url, method: 'get');
 
-      final response =
-          RemotePokemonsModel.fromJson(httpResponse.body).toEntity();
-      final pokemon = PokemonsEntity.fromJson(httpResponse.body);
-
-      print('\n\n REM<OTE: ${pokemon.runtimeType} \n${pokemon} \n\n');
-
       return RemotePokemonsModel.fromJson(httpResponse.body).toEntity();
     } on HttpError catch (error) {
       throw error == HttpError.forbidden

@@ -21,6 +21,7 @@ class DependencyInjectionWidget extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<PokemonDispatch>(
+          lazy: false,
           create: (BuildContext context) => PokemonDispatch(
             loadPokemon: RemoteLoadPokemon(
               url: url,
