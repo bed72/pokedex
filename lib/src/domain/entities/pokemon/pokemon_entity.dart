@@ -13,8 +13,14 @@ class PokemonsEntity extends Equatable {
       ];
 
   factory PokemonsEntity.fromJson(Map<String, dynamic> json) {
-    print('\n ENTITY: ${json.runtimeType} \n$json \n');
-    return PokemonsEntity(pokemon: json['pokemon']);
+    // print('\n ENTITY: ${json.runtimeType} \n$json \n');
+    List<PokemonEntity> _pokemonsList = <PokemonEntity>[];
+
+    json['pokemon'].forEach((pokemon) {
+      _pokemonsList.add(PokemonEntity.fromJson(pokemon));
+    });
+
+    return PokemonsEntity(pokemon: _pokemonsList);
   }
 }
 
@@ -40,10 +46,14 @@ class PokemonEntity extends Equatable {
         type,
       ];
 
-  factory PokemonEntity.fromJson(Map<String, dynamic> json) => PokemonEntity(
-        name: json['name'],
-        image: json['img'],
-        number: json['num'],
-        type: json['type'],
-      );
+  factory PokemonEntity.fromJson(Map<String, dynamic> json) {
+    // print("\n\n JSON ${json['type'].runtimeType} \n\n");
+
+    return PokemonEntity(
+      name: json['name'],
+      image: json['img'],
+      number: json['num'],
+      type: json['type'].map<String>((value) => value.toString()).toList(),
+    );
+  }
 }

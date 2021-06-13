@@ -26,7 +26,7 @@ class PokemonDispatch extends Cubit<PokemonState> {
       print('\n\n STORE $response \n\n');
 
       if (response.toString().isNotEmpty) {
-        emit(PokemonSeccess(value: []));
+        emit(PokemonSeccess(value: response.pokemon));
       } else {
         emit(PokemonFailure(message: 'Erro ao pegar os Pokemons!'));
       }
