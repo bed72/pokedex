@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../data/usecases/cache/cache_usecase.dart';
+
 import '../../../domain/helpers/domain/domain_error.dart';
 import '../../../domain/entities/pokemon/pokemon_entity.dart';
 import '../../../domain/usecases/pokemon/load_pokemon_usecase.dart';
@@ -9,9 +11,12 @@ import '../../../domain/usecases/pokemon/load_pokemon_usecase.dart';
 part 'pokemon_state.dart';
 
 class PokemonDispatch extends Cubit<PokemonState> {
+  late final Cache cache;
+
   late final LoadPokemon loadPokemon;
 
   PokemonDispatch({
+    required this.cache,
     required this.loadPokemon,
   }) : super(PokemonInitial()) {
     loadPokemons();
@@ -22,6 +27,8 @@ class PokemonDispatch extends Cubit<PokemonState> {
       emit(PokemonLoading());
 
       final PokemonsEntity response = await loadPokemon.load();
+
+      print('\n POKE: $response \n');
 
       if (response.toString().isNotEmpty) {
         emit(PokemonSeccess(values: response.pokemon));

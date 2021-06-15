@@ -1,4 +1,5 @@
 abstract class CacheClient {
+  Future<void> clear();
   Future<void> remove({required String key});
   Future<String?> fetch({required String key});
   Future<void> save({
