@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
@@ -14,25 +12,22 @@ part 'pokemon_state.dart';
 
 class PokemonDispatch extends Cubit<PokemonState> {
   late final Cache cache;
-
   late final LoadPokemon loadPokemon;
+
+  late final PokemonsEntity response;
 
   PokemonDispatch({
     required this.cache,
     required this.loadPokemon,
   }) : super(PokemonInitial()) {
-    loadPokemons();
+    callPokemons();
   }
 
-  Future<void> loadPokemons() async {
+  Future<void> callPokemons() async {
     try {
       emit(PokemonLoading());
 
-      final PokemonsEntity response = await loadPokemon.load();
-
-      print('\n\n POKEMONS: ${response.pokemon[0].toString()} \n\n');
-
-      await cache.save(key: 'pokemon', value: response.pokemon[0].toString());
+      response = await loadPokemon.load();
 
       if (response.toString().isNotEmpty) {
         emit(PokemonSeccess(values: response.pokemon));
@@ -42,5 +37,14 @@ class PokemonDispatch extends Cubit<PokemonState> {
     } on DomainError catch (error) {
       emit(PokemonFailure(message: error.descripition));
     }
+  }
+
+  Future<void> savePokemon(int index) async {
+    await cache.save(key: 'pokemon', value: response.pokemon[index].toString());
+  }
+
+  Future<void> loadPokemons() async {
+    final pokemons = await cache.fetch(key: 'pokemon');
+    print('\n\n POKEMONS: $pokemons \n\n');
   }
 }

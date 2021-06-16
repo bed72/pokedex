@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'src/app_widget.dart';
+import 'src/main/main_app_widget.dart';
 
 import 'src/main/singletons/shared_singleton.dart';
 
