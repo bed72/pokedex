@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
@@ -28,7 +30,9 @@ class PokemonDispatch extends Cubit<PokemonState> {
 
       final PokemonsEntity response = await loadPokemon.load();
 
-      print('\n POKE: $response \n');
+      print('\n\n POKEMONS: ${response.pokemon[0].toString()} \n\n');
+
+      await cache.save(key: 'pokemon', value: response.pokemon[0].toString());
 
       if (response.toString().isNotEmpty) {
         emit(PokemonSeccess(values: response.pokemon));

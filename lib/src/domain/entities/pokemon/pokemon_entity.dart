@@ -45,6 +45,16 @@ class PokemonEntity extends Equatable {
         type,
       ];
 
+  @override
+  String toString() => toJson().toString();
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'image': image,
+        'number': number,
+        'type': type,
+      };
+
   factory PokemonEntity.fromJson(Map<String, dynamic> json) => PokemonEntity(
         name: json['name'],
         image: json['img'],
